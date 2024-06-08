@@ -1,8 +1,17 @@
+using API_de_Produtos.Data;
+using API_de_Produtos.Repository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddDbContext<ProdutosDBContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("String"));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
