@@ -1,9 +1,11 @@
 ﻿using API_de_Produtos.Models;
 using API_de_Produtos.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_de_Produtos.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProdutoController : ControllerBase
