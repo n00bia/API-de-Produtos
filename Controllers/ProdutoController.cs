@@ -51,5 +51,20 @@ namespace API_de_Produtos.Controllers
             bool deleted = await _produtoRepository.Delete(id);
             return Ok(deleted);
         }
+
+        [HttpGet("dashboard")]
+        public IActionResult GetDashboard()
+        {
+            List<ProdutoModel> listaProdutos = _produtoRepository.GetProdutos();
+            var estatisticas = listaProdutos.GroupBy(p => p.Tipo).Select(g => new
+            {
+                Tipo = g.Key,
+                Quantidade = g.Count(),
+                MediaPrecoUnitario = g.Average(p => p.PrecoUnitario),
+            })
+            .ToList();
+
+            return Ok(estatisticas);
+        }
     }
 }

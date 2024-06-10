@@ -1,7 +1,6 @@
 ﻿using API_de_Produtos.Data;
 using API_de_Produtos.Models;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace API_de_Produtos.Repository
 {
@@ -61,6 +60,11 @@ namespace API_de_Produtos.Repository
             _dbContext.Produtos.Update(produtoAlvo);
             _dbContext.SaveChanges();
             return Task.FromResult(produtoAlvo);
+        }
+
+        public List<ProdutoModel> GetProdutos()
+        {
+            return  _dbContext.Produtos.ToList();
         }
     }
 }

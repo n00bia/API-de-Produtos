@@ -9,5 +9,6 @@ namespace API_de_Produtos.Repository
         public Task<List<ProdutoModel>> GetAll();
         public Task<ProdutoModel> GetById(int id);
         public Task<bool> Delete(int id);
+        public List<ProdutoModel> GetProdutos();
     }
 }
