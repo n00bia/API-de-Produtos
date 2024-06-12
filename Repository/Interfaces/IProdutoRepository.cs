@@ -1,6 +1,6 @@
 ﻿using API_de_Produtos.Models;
 
-namespace API_de_Produtos.Repository
+namespace API_de_Produtos.Repository.Interfaces
 {
     public interface IProdutoRepository
     {

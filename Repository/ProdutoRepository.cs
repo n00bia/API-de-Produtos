@@ -1,5 +1,6 @@
 ﻿using API_de_Produtos.Data;
 using API_de_Produtos.Models;
+using API_de_Produtos.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_de_Produtos.Repository
@@ -26,7 +27,7 @@ namespace API_de_Produtos.Repository
 
             if (produtoById == null)
             {
-                throw new Exception("Tag not found");
+                throw new Exception("Produto não encontrado.");
             }
 
             _dbContext.Produtos.Remove(produtoById);
