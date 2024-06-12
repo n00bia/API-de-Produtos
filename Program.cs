@@ -1,13 +1,12 @@
+using API_de_Produtos.Auth;
 using API_de_Produtos.Data;
 using API_de_Produtos.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using API_de_Produtos.Repository.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-string chaveSecreta = "44d1c9d7-ed13-495f-9741-19370cfccf4a";
 
 // Add services to the container.
 
@@ -23,45 +22,34 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "APi de Produtos", Version = "v1" });
 
-    var securitySchema = new OpenApiSecurityScheme
-    {
-        Name = "JWT Authenticação",
-        Description = "Entr com o JWT Bearer token",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
-    };
 
-    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securitySchema);
+
+    c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic",
+        In = ParameterLocation.Header,
+        Description = "Basic Authorization header."
+    });
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        { securitySchema, new string[] {} }
+        { new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "basic"
+                }
+            },
+            new string[] {}}
     });
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "sua_empresa",
-        ValidAudience = "sua_aplicacao",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveSecreta))
-    };
-});
+builder.Services.AddAuthentication("BasicAuthentication")
+   .AddScheme<AuthenticationSchemeOptions, BasicAuthentication>("BasicAuthentication", null);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
