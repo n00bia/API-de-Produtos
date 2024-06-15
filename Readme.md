@@ -6,6 +6,7 @@ Esse projeto é uma API de produtos que será utilizada por outra aplicação cl
 Docker versão 26.1.1
 docker compose versão 4.3
 DBeaver versao 24.0.5
+Visual Studio 2022 versão 17.9.7
 ```
 
 ## Rodando o banco
