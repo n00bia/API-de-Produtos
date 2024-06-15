@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API_de_Produtos.Data
 {
-    public class ProdutosDBContext : DbContext
+    public class ProductsDBContext : DbContext
     {
-        public ProdutosDBContext(DbContextOptions<ProdutosDBContext> options, IConfiguration configuration)
+        public ProductsDBContext(DbContextOptions<ProductsDBContext> options, IConfiguration configuration)
            : base(options)
         {
             Configuration = configuration;
@@ -14,7 +14,7 @@ namespace API_de_Produtos.Data
 
         public IConfiguration Configuration { get; set; }
 
-        public DbSet<ProdutoModel> Produtos { get; set; }        
+        public DbSet<Product> Products { get; set; }        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,7 +23,7 @@ namespace API_de_Produtos.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ProdutoMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
 
             base.OnModelCreating(modelBuilder);
             

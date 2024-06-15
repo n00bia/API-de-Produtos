@@ -5,14 +5,24 @@ using API_de_Produtos.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddDbContext<ProdutosDBContext>(options =>
+builder.Services.AddControllers().AddNewtonsoftJson(x =>
+{
+    x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    x.SerializerSettings.Converters.Add(new StringEnumConverter());
+}).AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddDbContext<ProductsDBContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("String"));
 });
