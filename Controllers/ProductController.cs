@@ -1,5 +1,4 @@
-﻿using API_de_Produtos.Enums;
-using API_de_Produtos.Models;
+﻿using API_de_Produtos.Models;
 using API_de_Produtos.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

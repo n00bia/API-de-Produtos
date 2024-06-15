@@ -1,5 +1,4 @@
-﻿using API_de_Produtos.Enums;
-using API_de_Produtos.Models;
+﻿using API_de_Produtos.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace API_de_Produtos.Enums
+﻿namespace API_de_Produtos.Enums
 {
     public enum ProductType 
     {        
